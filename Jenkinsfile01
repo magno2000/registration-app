@@ -2,18 +2,29 @@ pipeline {
     agent any
 
     stages {
-         stage('continuos download') {
+        stage('continue download') {
             steps {
-                echo 'echo dowloading in progress'
-                git branch: 'main', url: 'https://github.com/chamberlain96/registration-app.git'
+                echo 'downloading from git'
+                git branch: 'main', url: 'https://github.com/magno2000/registration-app.git'
+
+                  }
+                                     }
+                                         
+        stage('continue build') {
+            steps {
+                echo 'building in progress'
+                sh 'mvn clean install'
+
+                  }
+                                     
             }
-    }
-         stage('continuos build') {
+             stage('continue deployment') {
             steps {
-                echo 'echo building in progress'
-                 sh 'mvn clean install '
-    
-        }
-    }    
-}
+                echo 'deploying in progress'
+                deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://44.202.239.0:8080/')], contextPath: 'travisApp', onFailure: false, war: '**/*.war'
+
+                  }
+                                     
+            }
+         }
 }
