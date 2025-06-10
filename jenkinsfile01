@@ -18,6 +18,11 @@ pipeline {
                   }
                                      
             }
+         stage('Approval') {
+            steps {
+                input message: 'Proceed to Deployment?', ok: 'Approve'
+            }
+        }
              stage('continue deployment') {
             steps {
                 echo 'deploying in progress'
